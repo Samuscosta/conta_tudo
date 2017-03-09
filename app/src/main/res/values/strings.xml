@@ -1,13 +1,35 @@
 <resources>
     <string name="app_name">Conta Tudo</string>
 
-    <string name="valor_numerico_padrao">1</string>
+    //Valores
+    <string name="valor_0">0</string>
+    <string name="valor_1">1</string>
+    <string name="valor_100">100</string>
+
+    //Textos novo/alterar
     <string name="nome_contador">Nome do contador</string>
     <string name="quantidade">Quantidade: %1$d</string>
     <string name="valor_inicial">Valor inicial</string>
+    <string name="valor_atual">Valor atual</string>
     <string name="valor_incremento">Valor incremento</string>
-    <string name="valor_maximo">Valor máximo</string>
     <string name="valor_minimo">Valor mínimo</string>
-    <string name="botao_novo">Novo</string>
+    <string name="valor_maximo">Valor máximo</string>
     <string name="contador">Contador</string>
+
+    //Botões
+    <string name="novo">Novo</string>
+    <string name="salvar">Salvar</string>
+    <string name="excluir">Excluir</string>
+    <string name="alterar">Alterar</string>
+
+    //Detalhes
+    <string name="texto_string">%1$s</string>
+    <string name="valor_atual_string">Valor atual: %1$s</string>
+    <string name="valor_incremento_string">Valor incremento: %1$s</string>
+    <string name="valor_minimo_string">Valor mínimo: %1$s</string>
+    <string name="valor_maximo_string">Valor máximo: %1$s</string>
+    <string name="nao_usa_minimo">Não possui valor mínimo</string>
+    <string name="nao_usa_maximo">Não possui valor máximo</string>
+    <string name="data_hora_string">Data/hora criação</string>
+
 </resources>

@@ -12,7 +12,7 @@ class SQLiteHelper extends SQLiteOpenHelper {
 
 	private String[] scriptSQLCreate;
 
-	public SQLiteHelper(Context context, String nomeBanco, int versaoBanco, String[] scriptSQLCreate) {
+	SQLiteHelper(Context context, String nomeBanco, int versaoBanco, String[] scriptSQLCreate) {
 		super(context, nomeBanco, null, versaoBanco);
 		this.scriptSQLCreate = scriptSQLCreate;
 	}

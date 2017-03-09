@@ -145,6 +145,24 @@ public class Contador_Controller {
         return getList(sql);
     }
 
+    public Contador_Model obterContadorPorId(long id) {
+        try {
+            String sql = " SELECT * " +
+                    " FROM " + Contador_Model.NOME_TABELA +
+                    " WHERE " + Contador_Model._ID + " = " + id;
+
+            List<Contador_Model> list = getList(sql);
+
+            if (list != null && list.size() > 0) {
+                return list.get(0);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.toString());
+        }
+
+        return null;
+    }
+
     public void fechar() {
         if (db != null) {
             db.close();

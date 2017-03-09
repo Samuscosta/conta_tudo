@@ -7,9 +7,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.samuscosta.contatudo.R;
 import com.samuscosta.contatudo.adapter.Principal_Adapter;
@@ -48,7 +49,7 @@ public class Principal_Activity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        Contador_Controller controller = new Contador_Controller(Principal_Activity.this);
+        Contador_Controller controller = new Contador_Controller(ctx);
         listaContador = controller.obterListaOrdenada();
         controller.fechar();
 
@@ -59,11 +60,30 @@ public class Principal_Activity extends AppCompatActivity {
         alterarQuantidade();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_principal, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.novo:
+                startActivity(new Intent(ctx, Novo_Activity.class));
+                return (true);
+
+        }
+
+        return(super.onOptionsItemSelected(item));
+    }
+
+
     private void setaRecyclerView(){
 
         //Aqui é instanciado o Recyclerview
-        final RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.activityPrincipalRecycler);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
+        final RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.activityPrincipal_recycler);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(ctx);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         adapter = new Principal_Adapter(listaContador);
@@ -72,17 +92,10 @@ public class Principal_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int position = mRecyclerView.getChildAdapterPosition(v);
-                Contador_Model item = listaContador.get(position);
 
-                String mensagem = "Valor incremento: " + String.valueOf(item.getValorIncremento());
-
-                if (item.getUsarMinimo()) {
-                    mensagem += "\nValor mínimo: " + String.valueOf(item.getValorMinimo());
-                }
-                if (item.getUsarMaximo()) {
-                    mensagem += "\nValor máximo: " + String.valueOf(item.getValorMaximo());
-                }
-                Geral.toastShort(ctx, mensagem);
+                Intent it =  new Intent(ctx, Detalhe_Activity.class);
+                it.putExtra(Contador_Model._ID, listaContador.get(position).getId());
+                startActivity(it);
             }
         });
 
@@ -91,8 +104,10 @@ public class Principal_Activity extends AppCompatActivity {
             public void onMenosIsClick(View button, int position) {
                 Contador_Model item = listaContador.get(position);
 
-                double novoValor = item.getValorAtual() - item.getValorIncremento();
+                double novoValor = Double.parseDouble(Geral.formatarValor(item.getValorAtual()))
+                        - Double.parseDouble(Geral.formatarValor(item.getValorIncremento()));
 
+                novoValor = Double.parseDouble(Geral.formatarValor(novoValor));
                 if (item.getUsarMinimo()) {
                     if (novoValor <= item.getValorMinimo()) {
                         novoValor = item.getValorMinimo();
@@ -110,8 +125,10 @@ public class Principal_Activity extends AppCompatActivity {
             public void onMaisIsClick(View button, int position) {
                 Contador_Model item = listaContador.get(position);
 
-                double novoValor = item.getValorAtual() + item.getValorIncremento();
+                double novoValor = Double.parseDouble(Geral.formatarValor(item.getValorAtual()))
+                        + Double.parseDouble(Geral.formatarValor(item.getValorIncremento()));
 
+                novoValor = Double.parseDouble(Geral.formatarValor(novoValor));
                 if (item.getUsarMaximo()) {
                     if (novoValor >= item.getValorMaximo()) {
                         novoValor = item.getValorMaximo();
@@ -124,7 +141,7 @@ public class Principal_Activity extends AppCompatActivity {
             }
         });
 
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(ctx, LinearLayoutManager.VERTICAL));
 
         mRecyclerView.setAdapter(adapter);
     }
@@ -138,9 +155,8 @@ public class Principal_Activity extends AppCompatActivity {
     }
 
     private void setaComponentes(){
-
-        floatingActionButton = (FloatingActionButton) findViewById(R.id.activityPrincipalFab);
-        txtQuantidade = (TextView) findViewById(R.id.activityPrincipalTxtQuantidade);
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.activityPrincipal_fab);
+        txtQuantidade = (TextView) findViewById(R.id.activityPrincipal_txtQuantidade);
     }
 
     /**
@@ -151,14 +167,17 @@ public class Principal_Activity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Principal_Activity.this, Novo_Activity.class));
+                startActivity(new Intent(ctx, Novo_Activity.class));
             }
         });
     }
 
     private void alterarQuantidade() {
-        String quantidade = String.format(getResources().getString(R.string.quantidade), listaContador.size());
-        txtQuantidade.setText(quantidade);
+        txtQuantidade.setText(retornarStringResources(R.string.quantidade, listaContador.size()));
+    }
+
+    private String retornarStringResources(int id, Object... args) {
+        return String.format(getResources().getString(id), args);
     }
 
 }

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by Samuel on 07/03/2017.
  */
@@ -37,6 +39,22 @@ public class Geral {
 
     public static void toastShort(Context ctx, String mensagem) {
         Toast.makeText(ctx, mensagem, Toast.LENGTH_SHORT).show();
+    }
+
+    public static String retornarValorFormatado(double valor) {
+        String valorFormatado;
+        if (valor % 1 != 0) {
+            valorFormatado = String.valueOf(valor).replace(".", ",");
+        } else {
+            valorFormatado = formatarValor(valor);
+        }
+
+        return valorFormatado;
+    }
+
+    public static String formatarValor(double valor) {
+        DecimalFormat decimal = new DecimalFormat( "0.##" );
+        return decimal.format( valor ).replace(",", ".");
     }
 
 }

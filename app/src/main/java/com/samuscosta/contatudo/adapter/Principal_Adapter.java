@@ -8,8 +8,8 @@ import android.widget.TextView;
 
 import com.samuscosta.contatudo.R;
 import com.samuscosta.contatudo.model.Contador_Model;
+import com.samuscosta.contatudo.utilidade.Geral;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -57,6 +57,7 @@ public class Principal_Adapter extends RecyclerView.Adapter<Principal_Adapter.Vi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+
         if (clickListener != null) {
             holder.itemView.setOnClickListener(clickListener);
         }
@@ -116,21 +117,8 @@ public class Principal_Adapter extends RecyclerView.Adapter<Principal_Adapter.Vi
         void bind(final Contador_Model item, int position) {
             viewPosicao.setText(String.valueOf(position + 1));
             viewNome.setText(item.getNome());
-
-            String valor;
-            if (item.getValorAtual() % 1 != 0) {
-                valor = String.valueOf(item.getValorAtual()).replace(".", ",");
-            } else {
-                valor = formatarValor(item.getValorAtual());
-            }
-
-            viewValor.setText(valor);
+            viewValor.setText(Geral.retornarValorFormatado(item.getValorAtual()));
         }
-    }
-
-    private String formatarValor(double valor) {
-        DecimalFormat decimal = new DecimalFormat( "0" );
-        return decimal.format( valor );
     }
 
 }

@@ -25,7 +25,7 @@
             android:id="@+id/itemPrincipalPosicao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/valor_numerico_padrao"
+            android:text="@string/valor_1"
             android:layout_gravity="center"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="@string/valor_numerico_padrao"
+            android:text="@string/valor_1"
             android:textSize="35sp"/>
 
         <TextView
