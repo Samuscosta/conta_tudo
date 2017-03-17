@@ -1,9 +1,14 @@
 package com.samuscosta.contatudo.utilidade;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.view.WindowManager;
 import android.widget.Toast;
+
+import com.samuscosta.contatudo.controller.Configuracao_Controller;
+import com.samuscosta.contatudo.model.Configuracao_Model;
 
 import java.text.DecimalFormat;
 
@@ -57,4 +62,35 @@ public class Geral {
         return decimal.format( valor ).replace(",", ".");
     }
 
+    public static void alterarTelaAcesa(Activity activity) {
+        Configuracao_Controller controller = new Configuracao_Controller(activity.getBaseContext());
+        Configuracao_Model model = controller.obterConfiguracaoPorChave(
+                Constantes.CONFIGURACAO_TELA_LIGADA);
+        controller.fechar();
+
+        boolean acesa = false;
+
+        if (model != null) {
+            acesa = Boolean.getBoolean(model.getValor1());
+        }
+
+        if (acesa) {
+            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        } else {
+            activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
+    }
+
+    public static String obterValorConfiguracao(Context ctx, String chave, String valorPadrao) {
+        Configuracao_Controller controller = new Configuracao_Controller(ctx);
+        Configuracao_Model model = controller.obterConfiguracaoPorChave(chave);
+        controller.fechar();
+
+        if (model != null) {
+            return model.getValor1();
+        }
+
+        //Se não existir a configuração, retorna o valor padrão
+        return valorPadrao;
+    }
 }

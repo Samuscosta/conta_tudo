@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import com.samuscosta.contatudo.R;
@@ -18,17 +17,13 @@ import com.samuscosta.contatudo.utilidade.Geral;
 
 public class Detalhe_Activity extends AppCompatActivity {
 
-    TextView txtNome;
-    TextView txtAtual;
-    TextView txtIncremento;
-    TextView txtMinimo;
-    TextView txtMaximo;
-    TextView txtUsaMinimo;
-    TextView txtUsaMaximo;
-    TextView txtDataHora;
-    Contador_Model model;
-    Context ctx;
-    boolean carregouCerto = false;
+    private TextView txtDataHora;
+    private TextView txtNome;
+    private TextView txtAtual;
+    private TextView txtIncremento;
+    private Contador_Model model;
+    private Context ctx;
+    private boolean carregouCerto = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +52,7 @@ public class Detalhe_Activity extends AppCompatActivity {
             finish();
         }
 
-        setaValores();
+        setarValores();
     }
 
     @Override
@@ -87,40 +82,17 @@ public class Detalhe_Activity extends AppCompatActivity {
     }
 
     private void setaComponentes(){
+        txtDataHora = (TextView) findViewById(R.id.activityDetalhe_txtDataHora);
         txtNome = (TextView) findViewById(R.id.activityDetalhe_txtNome);
         txtAtual = (TextView) findViewById(R.id.activityDetalhe_txtAtual);
         txtIncremento = (TextView) findViewById(R.id.activityDetalhe_txtIncremento);
-        txtMinimo = (TextView) findViewById(R.id.activityDetalhe_txtMinimo);
-        txtMaximo = (TextView) findViewById(R.id.activityDetalhe_txtMaximo);
-        txtUsaMinimo = (TextView) findViewById(R.id.activityDetalhe_txtUsaMinimo);
-        txtUsaMaximo = (TextView) findViewById(R.id.activityDetalhe_txtUsaMaximo);
-        txtDataHora = (TextView) findViewById(R.id.activityDetalhe_txtDataHora);
     }
 
-    private void setaValores() {
+    private void setarValores() {
         txtNome.setText(retornarStringResources(R.string.texto_string, model.getNome()));
-        txtAtual.setText(retornarStringResources(R.string.valor_atual_string,
-                Geral.retornarValorFormatado(model.getValorAtual())));
-        txtIncremento.setText(retornarStringResources(R.string.valor_incremento_string,
-                Geral.retornarValorFormatado(model.getValorIncremento())));
-        txtDataHora.setText(retornarStringResources(R.string.texto_string,
-                model.getDataHoraCriacao()));
-
-        if (model.getUsarMinimo()) {
-            txtUsaMinimo.setVisibility(View.GONE);
-            txtMinimo.setText(retornarStringResources(R.string.valor_minimo_string,
-                    Geral.retornarValorFormatado(model.getValorMinimo())));
-        } else {
-            txtMinimo.setVisibility(View.GONE);
-        }
-
-        if (model.getUsarMaximo()) {
-            txtUsaMaximo.setVisibility(View.GONE);
-            txtMaximo.setText(retornarStringResources(R.string.valor_maximo_string,
-                    Geral.retornarValorFormatado(model.getValorMaximo())));
-        } else {
-            txtMaximo.setVisibility(View.GONE);
-        }
+        txtAtual.setText(retornarStringResources(R.string.valor_atual_string, model.getValorAtual()));
+        txtIncremento.setText(retornarStringResources(R.string.valor_incremento_string, model.getValorIncremento()));
+        txtDataHora.setText(retornarStringResources(R.string.texto_string, model.getDataHoraCriacao()));
     }
 
     private String retornarStringResources(int id, Object... args) {

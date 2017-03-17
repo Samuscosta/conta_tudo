@@ -58,41 +58,5 @@
             android:text="@string/valor_incremento_string"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
-        <TextView
-            android:id="@+id/activityDetalhe_txtMinimo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="10sp"
-            android:text="@string/valor_minimo_string"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
-
-        <TextView
-            android:id="@+id/activityDetalhe_txtUsaMinimo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="10sp"
-            android:text="@string/nao_usa_minimo"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
-
-        <TextView
-            android:id="@+id/activityDetalhe_txtMaximo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="10sp"
-            android:text="@string/valor_maximo_string"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
-
-        <TextView
-            android:id="@+id/activityDetalhe_txtUsaMaximo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="10sp"
-            android:text="@string/nao_usa_maximo"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
-
     </LinearLayout>
 </ScrollView>

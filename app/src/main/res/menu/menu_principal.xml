@@ -9,4 +9,8 @@
         android:icon="@android:drawable/ic_menu_add"
         app:showAsAction="always"
         android:title="@string/novo"/>
+
+    <item
+        android:id="@+id/configuracao"
+        android:title="@string/configuracao"/>
 </menu>

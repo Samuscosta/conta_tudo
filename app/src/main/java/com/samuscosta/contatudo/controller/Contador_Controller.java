@@ -31,10 +31,6 @@ public class Contador_Controller {
         values.put(Contador_Model.NOME, model.getNome());
         values.put(Contador_Model.VALOR_ATUAL, model.getValorAtual());
         values.put(Contador_Model.VALOR_INCREMENTO, model.getValorIncremento());
-        values.put(Contador_Model.VALOR_MAXIMO, model.getValorMaximo());
-        values.put(Contador_Model.VALOR_MINIMO, model.getValorMinimo());
-        values.put(Contador_Model.USAR_MAXIMO, model.getUsarMaximo());
-        values.put(Contador_Model.USAR_MINIMO, model.getUsarMinimo());
 
         return values;
     }
@@ -102,10 +98,6 @@ public class Contador_Controller {
                 int idxNome = cursor.getColumnIndex(Contador_Model.NOME);
                 int idxInicial = cursor.getColumnIndex(Contador_Model.VALOR_ATUAL);
                 int idxIncremento = cursor.getColumnIndex(Contador_Model.VALOR_INCREMENTO);
-                int idxMinimo = cursor.getColumnIndex(Contador_Model.VALOR_MINIMO);
-                int idxMaximo = cursor.getColumnIndex(Contador_Model.VALOR_MAXIMO);
-                int idxUsarMinimo = cursor.getColumnIndex(Contador_Model.USAR_MINIMO);
-                int idxUsarMaximo = cursor.getColumnIndex(Contador_Model.USAR_MAXIMO);
 
                 List<Contador_Model> list = new ArrayList<>();
 
@@ -115,17 +107,13 @@ public class Contador_Controller {
                     model.setId( idxId > -1 ? cursor.getLong(idxId) : 0);
                     model.setDataHoraCriacao( idxData > -1 ? cursor.getString(idxData) : "");
                     model.setNome( idxNome > -1 ? cursor.getString(idxNome) : "");
-                    model.setValorAtual( idxInicial > -1 ? cursor.getDouble(idxInicial) : 0);
-                    model.setValorIncremento( idxIncremento > -1 ? cursor.getDouble(idxIncremento) : 0);
-                    model.setValorMinimo( idxMinimo > -1 ? cursor.getDouble(idxMinimo) : 0);
-                    model.setValorMaximo( idxMaximo > -1 ? cursor.getDouble(idxMaximo) : 0);
-                    model.setUsarMinimo(idxUsarMinimo > -1 && cursor.getDouble(idxUsarMinimo) > 0);
-                    model.setUsarMaximo(idxUsarMaximo > -1 && cursor.getDouble(idxUsarMaximo) > 0);
+                    model.setValorAtual( idxInicial > -1 ? cursor.getInt(idxInicial) : 0);
+                    model.setValorIncremento( idxIncremento > -1 ? cursor.getInt(idxIncremento) : 0);
 
                     list.add(model);
                 } while (cursor.moveToNext());
 
-                return  list;
+                return list;
             }
 
         } catch (Exception e) {

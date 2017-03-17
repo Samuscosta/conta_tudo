@@ -15,27 +15,18 @@ public class Contador_Model implements BaseColumns {
     public static final String NOME = "nome";
     public static final String VALOR_ATUAL = "valorAtual";
     public static final String VALOR_INCREMENTO = "valorIncremento";
-    public static final String VALOR_MINIMO = "valorMinimo";
-    public static final String VALOR_MAXIMO = "valorMaximo";
-    public static final String USAR_MINIMO = "usarMinimo";
-    public static final String USAR_MAXIMO = "usarMaximo";
 
     //Atributos
     private long id = 0;
     private String dataHoraCriacao;
     private String nome = "";
-    private double valorAtual = 0;
-    private double valorIncremento = 0;
-    private double valorMinimo = 0;
-    private double valorMaximo = 0;
-    private boolean usarMinimo = false;
-    private boolean usarMaximo = false;
+    private int valorAtual = 0;
+    private int valorIncremento = 0;
 
     //Construtor
-    public Contador_Model() {
-    }
+    public Contador_Model() {}
 
-    //Getters
+    //Gettersa
     public long getId() {
         return id;
     }
@@ -48,28 +39,12 @@ public class Contador_Model implements BaseColumns {
         return nome;
     }
 
-    public double getValorAtual() {
+    public int getValorAtual() {
         return valorAtual;
     }
 
-    public double getValorIncremento() {
+    public int getValorIncremento() {
         return valorIncremento;
-    }
-
-    public double getValorMaximo() {
-        return valorMaximo;
-    }
-
-    public double getValorMinimo() {
-        return valorMinimo;
-    }
-
-    public boolean getUsarMinimo() {
-        return usarMinimo;
-    }
-
-    public boolean getUsarMaximo() {
-        return usarMaximo;
     }
 
     //Setters
@@ -85,27 +60,12 @@ public class Contador_Model implements BaseColumns {
         this.nome = nome;
     }
 
-    public void setValorAtual(double valorAtual) {
+    public void setValorAtual(int valorAtual) {
         this.valorAtual = valorAtual;
     }
 
-    public void setValorIncremento(double valorIncremento) {
+    public void setValorIncremento(int valorIncremento) {
         this.valorIncremento = valorIncremento;
     }
 
-    public void setValorMaximo(double valorMaximo) {
-        this.valorMaximo = valorMaximo;
-    }
-
-    public void setValorMinimo(double valorMinimo) {
-        this.valorMinimo = valorMinimo;
-    }
-
-    public void setUsarMinimo(boolean usarMinimo) {
-        this.usarMinimo = usarMinimo;
-    }
-
-    public void setUsarMaximo(boolean usarMaximo) {
-        this.usarMaximo = usarMaximo;
-    }
 }

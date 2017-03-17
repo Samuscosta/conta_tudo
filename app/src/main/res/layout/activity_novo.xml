@@ -60,9 +60,8 @@
                 android:layout_height="wrap_content"
                 android:maxLength="15"
                 android:layout_weight="1.0"
-                android:inputType="numberSigned|numberDecimal"
+                android:inputType="number"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:layout_marginBottom="10sp"
                 android:text="@string/valor_0"/>
 
             <EditText
@@ -71,65 +70,9 @@
                 android:layout_height="wrap_content"
                 android:maxLength="15"
                 android:layout_weight="1.0"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:text="@string/valor_1"
-                android:layout_marginBottom="10sp"/>
-        </LinearLayout>
-
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="2.0">
-
-            <CheckBox
-                android:id="@+id/activityNovo_chkMinimo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                android:onClick="activityNovoCheckMinimoOnClick"
-                android:text="@string/valor_minimo"/>
-
-            <CheckBox
-                android:id="@+id/activityNovo_chkMaximo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                android:onClick="activityNovoCheckMaximoOnClick"
-                android:text="@string/valor_maximo"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="2.0">
-
-            <EditText
-                android:id="@+id/activityNovo_txtMinimo"
-                android:enabled="false"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLength="15"
-                android:layout_weight="1.0"
-                android:inputType="numberSigned|numberDecimal"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:layout_marginBottom="10sp"
-                android:text="@string/valor_0"/>
-
-            <EditText
-                android:id="@+id/activityNovo_txtMaximo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10sp"
-                android:layout_weight="1.0"
-                android:enabled="false"
-                android:inputType="numberSigned|numberDecimal"
-                android:maxLength="15"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:text="@string/valor_100" />
+                android:text="@string/valor_1"/>
         </LinearLayout>
 
     </LinearLayout>

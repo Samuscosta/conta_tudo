@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.samuscosta.contatudo.R;
@@ -19,11 +17,7 @@ public class Novo_Activity extends AppCompatActivity {
     private TextView txtNome;
     private TextView txtValorInicial;
     private TextView txtValorIncremento;
-    private TextView txtValorMinimo;
-    private TextView txtValorMaximo;
     private TextView txtValorInicialLabel;
-    private CheckBox chkMinimo;
-    private CheckBox chkMaximo;
     private long idAlteracao;
 
     @Override
@@ -69,12 +63,8 @@ public class Novo_Activity extends AppCompatActivity {
                 txtValorInicialLabel.setText(getResources().getText(R.string.valor_atual));
 
                 txtNome.setText(model.getNome());
-                txtValorInicial.setText(Geral.retornarValorFormatado(model.getValorAtual()));
-                txtValorIncremento.setText(Geral.retornarValorFormatado(model.getValorIncremento()));
-                txtValorMinimo.setText(Geral.retornarValorFormatado(model.getValorMinimo()));
-                txtValorMaximo.setText(Geral.retornarValorFormatado(model.getValorMaximo()));
-                chkMinimo.setChecked(model.getUsarMinimo());
-                chkMaximo.setChecked(model.getUsarMaximo());
+                txtValorInicial.setText(String.valueOf(model.getValorAtual()));
+                txtValorIncremento.setText(String.valueOf(model.getValorIncremento()));
             }
         }
     }
@@ -83,10 +73,6 @@ public class Novo_Activity extends AppCompatActivity {
         txtNome = (TextView) findViewById(R.id.activityNovo_txtNome);
         txtValorInicial = (TextView) findViewById(R.id.activityNovo_txtInicial);
         txtValorIncremento = (TextView) findViewById(R.id.activityNovo_txtIncremento);
-        txtValorMinimo = (TextView) findViewById(R.id.activityNovo_txtMinimo);
-        txtValorMaximo = (TextView) findViewById(R.id.activityNovo_txtMaximo);
-        chkMinimo = (CheckBox) findViewById(R.id.activityNovo_chkMinimo);
-        chkMaximo = (CheckBox) findViewById(R.id.activityNovo_chkMaximo);
         txtValorInicialLabel = (TextView) findViewById(R.id.activityNovo_txtInicialLabel);
     }
 
@@ -102,22 +88,8 @@ public class Novo_Activity extends AppCompatActivity {
         contador.setId(idAlteracao);
         contador.setNome(txtNome.getText().toString());
         contador.setDataHoraCriacao(Tempo.retornarDataHoraAtual());
-        contador.setValorAtual(Double.parseDouble(txtValorInicial.getText().toString().replace(",", ".")));
-        contador.setValorIncremento(Double.parseDouble(txtValorIncremento.getText().toString().replace(",", ".")));
-        contador.setUsarMinimo(chkMinimo.isChecked());
-        contador.setUsarMaximo(chkMaximo.isChecked());
-
-        String minimo = txtValorMinimo.getText().toString().replace(",", ".");
-        if (minimo.equals("")) {
-            minimo = "0";
-        }
-        contador.setValorMinimo(Double.parseDouble(minimo));
-
-        String maximo = txtValorMaximo.getText().toString().replace(",", ".");
-        if (maximo.equals("")) {
-            maximo = "0";
-        }
-        contador.setValorMaximo(Double.parseDouble(maximo));
+        contador.setValorAtual(Integer.parseInt(txtValorInicial.getText().toString()));
+        contador.setValorIncremento(Integer.parseInt(txtValorIncremento.getText().toString()));
 
         Contador_Controller contador_controller = new Contador_Controller(Novo_Activity.this);
         long id = contador_controller.salvar(contador);
@@ -149,40 +121,7 @@ public class Novo_Activity extends AppCompatActivity {
             return false;
         }
 
-        if (chkMinimo.isChecked()) {
-            String minimo = txtValorMinimo.getText().toString();
-
-            if (minimo.equals("")) {
-                Geral.mensagem(this, "Campo vazio", "É necessário indicar o valor mínimo");
-                return false;
-
-            } else if (Double.parseDouble(minimo) > Double.parseDouble(inicial)) {
-                Geral.mensagem(this, "Valor inválido", "Valor mínimo não pode ser menor que o valor txtAtual");
-                return false;
-            }
-        }
-
-        if (chkMaximo.isChecked()) {
-            String maximo = txtValorMaximo.getText().toString();
-
-            if (maximo.equals("")) {
-                Geral.mensagem(this, "Campo vazio", "É necessário indicar o valor máximo");
-                return false;
-
-            } else if (Double.parseDouble(maximo) < Double.parseDouble(inicial)) {
-                Geral.mensagem(this, "Valor inválido", "Valor txtAtual não pode ser maior que o valor máximo");
-                return false;
-            }
-        }
-
         return true;
     }
 
-    public void activityNovoCheckMinimoOnClick(View view) {
-        txtValorMinimo.setEnabled(chkMinimo.isChecked());
-    }
-
-    public void activityNovoCheckMaximoOnClick(View view) {
-        txtValorMaximo.setEnabled(chkMaximo.isChecked());
-    }
 }

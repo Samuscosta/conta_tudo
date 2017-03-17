@@ -13,10 +13,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.samuscosta.contatudo.R;
-import com.samuscosta.contatudo.adapter.Principal_Adapter;
+import com.samuscosta.contatudo.adapter.ItemPorcentagem_Adapter;
+import com.samuscosta.contatudo.adapter.ItemPrincipal_Adapter;
 import com.samuscosta.contatudo.controller.Contador_Controller;
 import com.samuscosta.contatudo.database.SQLiteDataBase;
 import com.samuscosta.contatudo.model.Contador_Model;
+import com.samuscosta.contatudo.utilidade.Constantes;
 import com.samuscosta.contatudo.utilidade.DividerItemDecoration;
 import com.samuscosta.contatudo.utilidade.Geral;
 
@@ -26,10 +28,12 @@ import java.util.List;
 public class Principal_Activity extends AppCompatActivity {
 
     Context ctx;
-    Principal_Adapter adapter;
+    ItemPrincipal_Adapter adapter;
+    ItemPorcentagem_Adapter adapterPorcentagem;
     List<Contador_Model> listaContador = new ArrayList<>();
     FloatingActionButton floatingActionButton;
     TextView txtQuantidade;
+    TextView txtWBC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +44,8 @@ public class Principal_Activity extends AppCompatActivity {
         SQLiteDataBase.onCreate(ctx);
 
         setaComponentes();
-        setaRecyclerView();
+        setaRecyclerViewItens();
+        setaRecyclerViewPorcentagem();
 
         listenersButtons();
     }
@@ -55,9 +60,12 @@ public class Principal_Activity extends AppCompatActivity {
 
         if (listaContador == null) listaContador = new ArrayList<>();
 
-        setaRecyclerView();
+        setaRecyclerViewItens();
+        setaRecyclerViewPorcentagem();
         adapter.notifyDataSetChanged();
+        adapterPorcentagem.notifyDataSetChanged();
         alterarQuantidade();
+        alterarWBC();
     }
 
     @Override
@@ -73,20 +81,24 @@ public class Principal_Activity extends AppCompatActivity {
                 startActivity(new Intent(ctx, Novo_Activity.class));
                 return (true);
 
+            case R.id.configuracao:
+                startActivity(new Intent(ctx, Configuracao_Activity.class));
+                return (true);
+
         }
 
         return(super.onOptionsItemSelected(item));
     }
 
 
-    private void setaRecyclerView(){
+    private void setaRecyclerViewItens(){
 
         //Aqui é instanciado o Recyclerview
-        final RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.activityPrincipal_recycler);
+        final RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.activityPrincipal_recyclerItens);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(ctx);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        adapter = new Principal_Adapter(listaContador);
+        adapter = new ItemPrincipal_Adapter(listaContador);
 
         adapter.setOnItemClickListener(new View.OnClickListener() {
             @Override
@@ -99,44 +111,20 @@ public class Principal_Activity extends AppCompatActivity {
             }
         });
 
-        adapter.setMenosButtonListener(new Principal_Adapter.OnMenosItemClickListener() {
+        adapter.setMenosButtonListener(new ItemPrincipal_Adapter.OnMenosItemClickListener() {
             @Override
             public void onMenosIsClick(View button, int position) {
                 Contador_Model item = listaContador.get(position);
-
-                double novoValor = Double.parseDouble(Geral.formatarValor(item.getValorAtual()))
-                        - Double.parseDouble(Geral.formatarValor(item.getValorIncremento()));
-
-                novoValor = Double.parseDouble(Geral.formatarValor(novoValor));
-                if (item.getUsarMinimo()) {
-                    if (novoValor <= item.getValorMinimo()) {
-                        novoValor = item.getValorMinimo();
-                        Geral.toastShort(ctx, item.getNome() + " alcançou o valor mínimo");
-                    }
-                }
-
-                item.setValorAtual(novoValor);
+                item.setValorAtual(item.getValorAtual() - item.getValorIncremento());
                 gravarAlteracao(item);
             }
         });
 
-        adapter.setMaisButtonListener(new Principal_Adapter.OnMaisItemClickListener() {
+        adapter.setMaisButtonListener(new ItemPrincipal_Adapter.OnMaisItemClickListener() {
             @Override
             public void onMaisIsClick(View button, int position) {
                 Contador_Model item = listaContador.get(position);
-
-                double novoValor = Double.parseDouble(Geral.formatarValor(item.getValorAtual()))
-                        + Double.parseDouble(Geral.formatarValor(item.getValorIncremento()));
-
-                novoValor = Double.parseDouble(Geral.formatarValor(novoValor));
-                if (item.getUsarMaximo()) {
-                    if (novoValor >= item.getValorMaximo()) {
-                        novoValor = item.getValorMaximo();
-                        Geral.toastShort(ctx, item.getNome() + " alcançou o valor máximo");
-                    }
-                }
-
-                item.setValorAtual(novoValor);
+                item.setValorAtual(item.getValorAtual() + item.getValorIncremento());
                 gravarAlteracao(item);
             }
         });
@@ -146,17 +134,33 @@ public class Principal_Activity extends AppCompatActivity {
         mRecyclerView.setAdapter(adapter);
     }
 
+    private void setaRecyclerViewPorcentagem(){
+
+        //Aqui é instanciado o Recyclerview
+        final RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.activityPrincipal_recyclerPorcentagem);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(ctx);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        adapterPorcentagem = new ItemPorcentagem_Adapter(listaContador);
+
+        //mRecyclerView.addItemDecoration(new DividerItemDecoration(ctx, LinearLayoutManager.HORIZONTAL));
+
+        mRecyclerView.setAdapter(adapterPorcentagem);
+    }
+
     private void gravarAlteracao(Contador_Model model) {
         Contador_Controller controller = new Contador_Controller(ctx);
-        long retorno = controller.salvar(model);
+        controller.salvar(model);
         controller.fechar();
 
         adapter.notifyDataSetChanged();
+        adapterPorcentagem.notifyDataSetChanged();
     }
 
     private void setaComponentes(){
         floatingActionButton = (FloatingActionButton) findViewById(R.id.activityPrincipal_fab);
         txtQuantidade = (TextView) findViewById(R.id.activityPrincipal_txtQuantidade);
+        txtWBC = (TextView) findViewById(R.id.activityPrincipal_txtWbc);
     }
 
     /**
@@ -174,6 +178,11 @@ public class Principal_Activity extends AppCompatActivity {
 
     private void alterarQuantidade() {
         txtQuantidade.setText(retornarStringResources(R.string.quantidade, listaContador.size()));
+    }
+
+    private void alterarWBC() {
+        txtWBC.setText(retornarStringResources(R.string.wbc_string,
+                Geral.obterValorConfiguracao(ctx, Constantes.CONFIGURACAO_WBC, "4000")));
     }
 
     private String retornarStringResources(int id, Object... args) {

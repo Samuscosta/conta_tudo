@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.samuscosta.contatudo.R;
 import com.samuscosta.contatudo.model.Contador_Model;
-import com.samuscosta.contatudo.utilidade.Geral;
 
 import java.util.List;
 
@@ -18,7 +17,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Samuel on 02/03/2017.
  */
 
-public class Principal_Adapter extends RecyclerView.Adapter<Principal_Adapter.ViewHolder>{
+public class ItemPrincipal_Adapter extends RecyclerView.Adapter<ItemPrincipal_Adapter.ViewHolder>{
     private List<Contador_Model> lista;
 
     public interface OnMenosItemClickListener {
@@ -29,7 +28,7 @@ public class Principal_Adapter extends RecyclerView.Adapter<Principal_Adapter.Vi
         void onMaisIsClick(View button, int position);
     }
 
-    public Principal_Adapter(List<Contador_Model> lista) {
+    public ItemPrincipal_Adapter(List<Contador_Model> lista) {
         this.lista = lista;
     }
 
@@ -117,7 +116,7 @@ public class Principal_Adapter extends RecyclerView.Adapter<Principal_Adapter.Vi
         void bind(final Contador_Model item, int position) {
             viewPosicao.setText(String.valueOf(position + 1));
             viewNome.setText(item.getNome());
-            viewValor.setText(Geral.retornarValorFormatado(item.getValorAtual()));
+            viewValor.setText(String.valueOf(item.getValorAtual()));
         }
     }
 

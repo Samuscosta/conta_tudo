@@ -17,6 +17,7 @@
         </activity>
         <activity android:name=".activity.Novo_Activity" />
         <activity android:name=".activity.Detalhe_Activity" />
+        <activity android:name=".activity.Configuracao_Activity" />
     </application>
 
 </manifest>

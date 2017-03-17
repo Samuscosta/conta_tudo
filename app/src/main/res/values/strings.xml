@@ -5,10 +5,12 @@
     <string name="valor_0">0</string>
     <string name="valor_1">1</string>
     <string name="valor_100">100</string>
+    <string name="valor_4000">4000</string>
 
     //Textos novo/alterar
     <string name="nome_contador">Nome do contador</string>
     <string name="quantidade">Quantidade: %1$d</string>
+    <string name="wbc_string">WBC: %1$s</string>
     <string name="valor_inicial">Valor inicial</string>
     <string name="valor_atual">Valor atual</string>
     <string name="valor_incremento">Valor incremento</string>
@@ -16,7 +18,8 @@
     <string name="valor_maximo">Valor máximo</string>
     <string name="contador">Contador</string>
 
-    //Botões
+    //Menu
+    <string name="configuracao">Configurações</string>
     <string name="novo">Novo</string>
     <string name="salvar">Salvar</string>
     <string name="excluir">Excluir</string>
@@ -28,8 +31,12 @@
     <string name="valor_incremento_string">Valor incremento: %1$s</string>
     <string name="valor_minimo_string">Valor mínimo: %1$s</string>
     <string name="valor_maximo_string">Valor máximo: %1$s</string>
-    <string name="nao_usa_minimo">Não possui valor mínimo</string>
-    <string name="nao_usa_maximo">Não possui valor máximo</string>
+    <string name="nao_usa_minimo">Não possui quantidade mínimo</string>
+    <string name="nao_usa_maximo">Não possui quantidade máximo</string>
     <string name="data_hora_string">Data/hora criação</string>
+
+    //Configurações
+    <string name="numero_wbc">Número WBC</string>
+    <string name="tela_ligada">Manter tela ligada</string>
 
 </resources>
