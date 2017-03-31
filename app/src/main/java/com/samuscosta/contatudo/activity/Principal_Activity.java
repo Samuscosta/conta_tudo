@@ -34,6 +34,7 @@ public class Principal_Activity extends AppCompatActivity {
     FloatingActionButton floatingActionButton;
     TextView txtQuantidade;
     TextView txtWBC;
+    boolean exibirMenuDetalhes = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,6 @@ public class Principal_Activity extends AppCompatActivity {
 
         setaComponentes();
         setaRecyclerViewItens();
-        setaRecyclerViewPorcentagem();
 
         listenersButtons();
     }
@@ -60,10 +60,14 @@ public class Principal_Activity extends AppCompatActivity {
 
         if (listaContador == null) listaContador = new ArrayList<>();
 
-        setaRecyclerViewItens();
-        setaRecyclerViewPorcentagem();
-        adapter.notifyDataSetChanged();
-        adapterPorcentagem.notifyDataSetChanged();
+        if (exibirMenuDetalhes) {
+            setaRecyclerViewItens();
+            adapter.notifyDataSetChanged();
+        } else {
+            setaRecyclerViewPorcentagem();
+            adapterPorcentagem.notifyDataSetChanged();
+        }
+
         alterarQuantidade();
         alterarWBC();
     }
@@ -71,18 +75,50 @@ public class Principal_Activity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_principal, menu);
+
+        MenuItem itemDetalhes = menu.findItem(R.id.menuPrincipal_Detalhes);
+        MenuItem itemNormal = menu.findItem(R.id.menuPrincipal_Normal);
+
+        itemDetalhes.setVisible(exibirMenuDetalhes);
+        itemNormal.setVisible( ! exibirMenuDetalhes);
+
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem itemDetalhes = menu.findItem(R.id.menuPrincipal_Detalhes);
+        MenuItem itemNormal = menu.findItem(R.id.menuPrincipal_Normal);
+
+        itemDetalhes.setVisible(exibirMenuDetalhes);
+        itemNormal.setVisible( ! exibirMenuDetalhes);
+
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-            case R.id.novo:
+            case R.id.menuPrincipal_Novo:
                 startActivity(new Intent(ctx, Novo_Activity.class));
                 return (true);
 
-            case R.id.configuracao:
+            case R.id.menuPrincipal_Configuracao:
                 startActivity(new Intent(ctx, Configuracao_Activity.class));
+                return (true);
+
+            case R.id.menuPrincipal_Detalhes:
+                exibirMenuDetalhes = ! exibirMenuDetalhes;
+                setaRecyclerViewPorcentagem();
+
+                invalidateOptionsMenu();
+                return (true);
+
+            case R.id.menuPrincipal_Normal:
+                exibirMenuDetalhes = ! exibirMenuDetalhes;
+                setaRecyclerViewItens();
+
+                invalidateOptionsMenu();
                 return (true);
 
         }
@@ -94,7 +130,7 @@ public class Principal_Activity extends AppCompatActivity {
     private void setaRecyclerViewItens(){
 
         //Aqui é instanciado o Recyclerview
-        final RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.activityPrincipal_recyclerItens);
+        final RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.activityPrincipal_recycler);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(ctx);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
@@ -137,7 +173,7 @@ public class Principal_Activity extends AppCompatActivity {
     private void setaRecyclerViewPorcentagem(){
 
         //Aqui é instanciado o Recyclerview
-        final RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.activityPrincipal_recyclerPorcentagem);
+        final RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.activityPrincipal_recycler);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(ctx);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
@@ -154,7 +190,7 @@ public class Principal_Activity extends AppCompatActivity {
         controller.fechar();
 
         adapter.notifyDataSetChanged();
-        adapterPorcentagem.notifyDataSetChanged();
+        //adapterPorcentagem.notifyDataSetChanged();
     }
 
     private void setaComponentes(){

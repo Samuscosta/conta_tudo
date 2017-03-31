@@ -5,12 +5,25 @@
     tools:context=".activity.Novo_Activity">
 
     <item
-        android:id="@+id/novo"
+        android:id="@+id/menuPrincipal_Novo"
         android:icon="@android:drawable/ic_menu_add"
         app:showAsAction="always"
         android:title="@string/novo"/>
 
     <item
-        android:id="@+id/configuracao"
+        android:id="@+id/menuPrincipal_Detalhes"
+        android:icon="@android:drawable/ic_menu_info_details"
+        app:showAsAction="always"
+        android:title="@string/detalhes"/>
+
+    <item
+        android:id="@+id/menuPrincipal_Normal"
+        android:icon="@android:drawable/ic_menu_view"
+        app:showAsAction="always"
+        android:visible="false"
+        android:title="@string/normal"/>
+
+    <item
+        android:id="@+id/menuPrincipal_Configuracao"
         android:title="@string/configuracao"/>
 </menu>

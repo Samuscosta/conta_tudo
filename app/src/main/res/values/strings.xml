@@ -24,6 +24,8 @@
     <string name="salvar">Salvar</string>
     <string name="excluir">Excluir</string>
     <string name="alterar">Alterar</string>
+    <string name="detalhes">Detalhes</string>
+    <string name="normal">Normal</string>
 
     //Detalhes
     <string name="texto_string">%1$s</string>
