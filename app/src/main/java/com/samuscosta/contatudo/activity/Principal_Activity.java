@@ -165,7 +165,7 @@ public class Principal_Activity extends AppCompatActivity {
             }
         });
 
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(ctx, LinearLayoutManager.VERTICAL));
+        //mRecyclerView.addItemDecoration(new DividerItemDecoration(ctx, LinearLayoutManager.VERTICAL));
 
         mRecyclerView.setAdapter(adapter);
     }
